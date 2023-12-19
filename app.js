@@ -20,6 +20,7 @@ mongoose.connect('mongodb+srv://user:user@node-rest-shop.giwp7cf.mongodb.net/?re
         console.error('Error connecting to MongoDB Atlas:', error);
     });
 
+    
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -28,5 +29,22 @@ app.use('/products', productRoutes)
 
 app.use('/orders', orderRoutes)
 
+//will reach this line denoting earlier routes werent working 
+app.use((req, res, next) => {
+    const error = new Error('not found');
+    error.status = 404;
+    next(error);
+})
+
+//this will handle all kinds of error also above error as it is been passed into next
+//sends response having error status code and error message
+app.use((error, req, res, next) => {
+    res.status(error.status || 500);
+    res.json({
+        error: {
+            message: error.message
+        }
+    })
+})
 
 module.exports = app;
