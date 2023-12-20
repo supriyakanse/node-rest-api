@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 
 const productRoutes = require('C:/Users/user/Documents/node/node-rest-api/api/products.js');
 const orderRoutes = require('./api/routes/Orders');
-
+const userRoutes=require('C:/Users/user/Documents/node/node-rest-api/api/routes/user.js');
 mongoose.connect('mongodb+srv://user:user@node-rest-shop.giwp7cf.mongodb.net/?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -20,14 +20,14 @@ mongoose.connect('mongodb+srv://user:user@node-rest-shop.giwp7cf.mongodb.net/?re
         console.error('Error connecting to MongoDB Atlas:', error);
     });
 
-    
-
+app.use('/uploads',express.static('uploads'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use('/products', productRoutes)
 
 app.use('/orders', orderRoutes)
+app.use('/user',userRoutes)
 
 //will reach this line denoting earlier routes werent working 
 app.use((req, res, next) => {

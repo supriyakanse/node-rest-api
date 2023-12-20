@@ -1,11 +1,12 @@
 const express=require('express')
 const router=express.Router()
 const mongoose=require('mongoose')
+const checkAuth=require('C:/Users/user/Documents/node/node-rest-api/api/middleware/check-auth.js')
 
 const Order=require('C:/Users/user/Documents/node/node-rest-api/api/models/order.js');
 const Product=require('C:/Users/user/Documents/node/node-rest-api/api/models/product.js');
 
-router.get('/',(req,res,next)=>{
+router.get('/',checkAuth,(req,res,next)=>{
     Order.find()
     .select("product quantity _id")
     .exec()
@@ -29,7 +30,7 @@ router.get('/',(req,res,next)=>{
          res.status(500).json({error:err})
     });    
 })
-router.post('/',(req,res,next)=>{
+router.post('/',checkAuth,(req,res,next)=>{
     Product.findById(req.body.productID)
     .then(product=>{
         if(!product){
@@ -64,7 +65,7 @@ router.post('/',(req,res,next)=>{
     });
     });
 
-router.get('/:orderID',(req,res,next)=>{
+router.get('/:orderID',checkAuth,(req,res,next)=>{
     Order.findById(req.params.orderID)
     .exec()
     .then(order=>{
@@ -85,7 +86,7 @@ router.get('/:orderID',(req,res,next)=>{
          res.status(500).json({error:err})
     })
 })
-router.delete('/:orderID',(req,res,next)=>{
+router.delete('/:orderID',checkAuth,(req,res,next)=>{
     Order.deleteOne({ _id:req.params.orderID })
     .exec()
     .then(result=>{
