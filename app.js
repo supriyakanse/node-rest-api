@@ -8,8 +8,7 @@ const productRoutes = require('C:/Users/user/Documents/node/node-rest-api/api/pr
 const orderRoutes = require('./api/routes/Orders');
 const userRoutes=require('C:/Users/user/Documents/node/node-rest-api/api/routes/user.js');
 mongoose.connect('mongodb+srv://user:user@node-rest-shop.giwp7cf.mongodb.net/?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    
     retryWrites: true,
     w: 'majority',
 })
